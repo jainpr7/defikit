@@ -1,7 +1,5 @@
 """ERC20 token utilities."""
 
-
-
 from ..core.contracts import get_contract
 from ..core.provider import AsyncProvider
 from ..core.types import Address, TokenAmount, TokenInfo, Wei

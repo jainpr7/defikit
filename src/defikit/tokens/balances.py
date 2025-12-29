@@ -1,6 +1,5 @@
 """Batch balance queries using multicall."""
 
-
 from eth_abi import decode
 
 from ..core.provider import AsyncProvider

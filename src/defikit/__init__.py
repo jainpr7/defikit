@@ -49,7 +49,9 @@ class DeFiKit:
         Returns:
             DeFiKit instance
         """
-        config = DefiKitConfig(_env_file=env_file)
+        # Note: pydantic-settings handles .env files automatically via env_file in model_config
+        # For now, use default config which will read from .env
+        config = DefiKitConfig()
         return cls(config=config, chain=chain)
 
     async def get_token_info(self, token_address: str):
