@@ -1,9 +1,7 @@
 """Main DeFiKit class."""
 
-from typing import Optional
-
-from .core import DefiKitConfig, AsyncProvider, get_chain
-from .tokens import ERC20, get_token_info, get_balance, get_balances
+from .core import AsyncProvider, DefiKitConfig, get_chain
+from .tokens import get_balance, get_balances, get_token_info
 
 
 class DeFiKit:
@@ -11,8 +9,8 @@ class DeFiKit:
 
     def __init__(
         self,
-        rpc_url: Optional[str] = None,
-        config: Optional[DefiKitConfig] = None,
+        rpc_url: str | None = None,
+        config: DefiKitConfig | None = None,
         chain: str = "ethereum",
     ):
         """Initialize DeFiKit.

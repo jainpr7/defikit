@@ -1,20 +1,19 @@
 """Batch balance queries using multicall."""
 
-from typing import Optional
 
 from eth_abi import decode
 
 from ..core.provider import AsyncProvider
 from ..core.types import Address, TokenAmount
-from ..utils.multicall import Multicall, Call
 from ..utils.encoding import encode_function_data
+from ..utils.multicall import Call, Multicall
 
 
 async def get_balances(
     wallet_address: Address,
     token_addresses: list[Address],
     provider: AsyncProvider,
-    multicall_address: Optional[Address] = None,
+    multicall_address: Address | None = None,
 ) -> dict[Address, TokenAmount]:
     """Get balances for multiple tokens in a single call.
 
@@ -64,7 +63,7 @@ async def get_eth_and_token_balances(
     wallet_address: Address,
     token_addresses: list[Address],
     provider: AsyncProvider,
-    multicall_address: Optional[Address] = None,
+    multicall_address: Address | None = None,
 ) -> dict[str, TokenAmount]:
     """Get ETH and token balances in a single call.
 

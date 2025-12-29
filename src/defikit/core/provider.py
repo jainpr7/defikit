@@ -1,14 +1,15 @@
 """Async RPC provider wrapper with retry logic."""
 
 import asyncio
-from typing import Any, Optional
+from typing import Any
 
 from eth_typing import HexStr
-from web3 import AsyncWeb3, AsyncHTTPProvider
-from web3.types import TxParams, BlockIdentifier as Web3BlockIdentifier
+from web3 import AsyncHTTPProvider, AsyncWeb3
+from web3.types import BlockIdentifier as Web3BlockIdentifier
+from web3.types import TxParams
 
 from .exceptions import ProviderError, TransactionTimeoutError
-from .types import Address, Wei, BlockIdentifier, TransactionReceipt
+from .types import Address, BlockIdentifier, TransactionReceipt, Wei
 
 
 class AsyncProvider:
@@ -17,7 +18,7 @@ class AsyncProvider:
     def __init__(
         self,
         rpc_url: str,
-        fallback_urls: Optional[list[str]] = None,
+        fallback_urls: list[str] | None = None,
         max_retries: int = 3,
         timeout: int = 30,
         retry_delay: float = 1.0,
@@ -187,12 +188,12 @@ class AsyncProvider:
             try:
                 receipt = await self.get_transaction_receipt(tx_hash)
                 return receipt
-            except Exception:
+            except Exception as e:
                 elapsed = asyncio.get_event_loop().time() - start_time
                 if elapsed >= timeout:
                     raise TransactionTimeoutError(
                         f"Transaction {tx_hash} not mined after {timeout} seconds"
-                    )
+                    ) from e
                 await asyncio.sleep(poll_latency)
 
     async def get_gas_price(self) -> Wei:
@@ -208,8 +209,8 @@ class AsyncProvider:
         self,
         from_block: BlockIdentifier = "latest",
         to_block: BlockIdentifier = "latest",
-        address: Optional[Address] = None,
-        topics: Optional[list[HexStr]] = None,
+        address: Address | None = None,
+        topics: list[HexStr] | None = None,
     ) -> list[dict[str, Any]]:
         """Get logs matching filter criteria."""
 
@@ -217,8 +218,8 @@ class AsyncProvider:
             provider: AsyncWeb3,
             from_blk: Web3BlockIdentifier,
             to_blk: Web3BlockIdentifier,
-            addr: Optional[Address],
-            topic_list: Optional[list[HexStr]],
+            addr: Address | None,
+            topic_list: list[HexStr] | None,
         ) -> list[dict[str, Any]]:
             filter_params: dict[str, Any] = {
                 "fromBlock": from_blk,

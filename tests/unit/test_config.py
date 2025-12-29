@@ -1,6 +1,5 @@
 """Unit tests for configuration."""
 
-import pytest
 from defikit.core import DefiKitConfig
 
 

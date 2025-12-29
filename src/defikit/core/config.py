@@ -1,6 +1,5 @@
 """Configuration management for DeFiKit."""
 
-from typing import Optional
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -18,14 +17,14 @@ class DefiKitConfig(BaseSettings):
     rpc_urls: dict[str, str] = Field(default_factory=dict)
 
     # API Keys
-    etherscan_api_key: Optional[str] = None
-    alchemy_api_key: Optional[str] = None
-    infura_project_id: Optional[str] = None
+    etherscan_api_key: str | None = None
+    alchemy_api_key: str | None = None
+    infura_project_id: str | None = None
 
     # Transaction Settings
     default_slippage_bps: int = 50  # 0.5%
     default_deadline_seconds: int = 1200  # 20 minutes
-    max_gas_price_gwei: Optional[float] = None
+    max_gas_price_gwei: float | None = None
 
     # Provider Settings
     request_timeout: int = 30

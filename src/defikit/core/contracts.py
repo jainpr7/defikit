@@ -1,12 +1,10 @@
 """Contract loading and ABI caching."""
 
-from typing import Any, Optional
-
-from web3 import AsyncWeb3
+from typing import Any
 
 from ..core.provider import AsyncProvider
 from ..core.types import Address
-from .abi import load_abi
+from ..utils.abi import load_abi
 
 
 class Contract:
@@ -91,7 +89,7 @@ class Contract:
         self,
         function_name: str,
         *args: Any,
-        from_address: Optional[Address] = None,
+        from_address: Address | None = None,
         **kwargs: Any,
     ) -> int:
         """Estimate gas for a function call.

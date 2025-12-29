@@ -1,6 +1,5 @@
 """Unit tests for analytics."""
 
-import pytest
 from decimal import Decimal
 
 from defikit.analytics import APY, ImpermanentLoss

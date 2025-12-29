@@ -1,12 +1,11 @@
 """Impermanent loss calculation."""
 
 from decimal import Decimal
-from typing import Union
 
 
 def calculate_impermanent_loss(
-    initial_price: Union[float, Decimal],
-    current_price: Union[float, Decimal],
+    initial_price: float | Decimal,
+    current_price: float | Decimal,
 ) -> Decimal:
     """Calculate impermanent loss percentage.
 
@@ -35,10 +34,10 @@ class ImpermanentLoss:
 
     @staticmethod
     def calculate(
-        initial_price: Union[float, Decimal],
-        current_price: Union[float, Decimal],
-        initial_amount_a: Union[float, Decimal] = 1.0,
-        initial_amount_b: Union[float, Decimal] = 1.0,
+        initial_price: float | Decimal,
+        current_price: float | Decimal,
+        initial_amount_a: float | Decimal = 1.0,
+        initial_amount_b: float | Decimal = 1.0,
     ) -> dict[str, Decimal]:
         """Calculate impermanent loss with detailed breakdown.
 
@@ -55,7 +54,6 @@ class ImpermanentLoss:
 
         initial_a = Decimal(str(initial_amount_a))
         initial_b = Decimal(str(initial_amount_b))
-        init_price = Decimal(str(initial_price))
         curr_price = Decimal(str(current_price))
 
         # Calculate what would have happened if just holding

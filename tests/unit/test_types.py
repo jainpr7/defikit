@@ -1,6 +1,5 @@
 """Unit tests for types."""
 
-import pytest
 from decimal import Decimal
 
 from defikit.core.types import TokenAmount, Wei

@@ -1,13 +1,10 @@
 """ERC20 token utilities."""
 
-from typing import Optional
 
-from eth_abi import decode
 
 from ..core.contracts import get_contract
 from ..core.provider import AsyncProvider
-from ..core.types import Address, Wei, TokenAmount, TokenInfo
-from ..core.exceptions import TokenError
+from ..core.types import Address, TokenAmount, TokenInfo, Wei
 from ..utils.encoding import encode_function_data
 
 

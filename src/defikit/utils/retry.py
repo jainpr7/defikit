@@ -1,7 +1,8 @@
 """Async retry logic with exponential backoff."""
 
 import asyncio
-from typing import Any, Callable, Optional, TypeVar
+from collections.abc import Callable
+from typing import Any, TypeVar
 
 T = TypeVar("T")
 
@@ -12,7 +13,7 @@ async def async_retry(
     max_retries: int = 3,
     initial_delay: float = 1.0,
     exponential_base: float = 2.0,
-    max_delay: Optional[float] = None,
+    max_delay: float | None = None,
     exceptions: tuple[type[Exception], ...] = (Exception,),
     **kwargs: Any,
 ) -> T:
@@ -34,7 +35,7 @@ async def async_retry(
     Raises:
         The last exception if all retries fail
     """
-    last_exception: Optional[Exception] = None
+    last_exception: Exception | None = None
 
     for attempt in range(max_retries + 1):
         try:
@@ -64,7 +65,7 @@ class RetryConfig:
         max_retries: int = 3,
         initial_delay: float = 1.0,
         exponential_base: float = 2.0,
-        max_delay: Optional[float] = None,
+        max_delay: float | None = None,
         exceptions: tuple[type[Exception], ...] = (Exception,),
     ):
         """Initialize retry configuration.

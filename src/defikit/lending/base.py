@@ -3,7 +3,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import Optional
 
 from ..core.types import Address, TokenAmount
 
@@ -64,7 +63,7 @@ class BaseLending(ABC):
         self,
         asset: Address,
         amount: TokenAmount,
-        on_behalf_of: Optional[Address] = None,
+        on_behalf_of: Address | None = None,
     ) -> bytes:
         """Build supply transaction calldata.
 

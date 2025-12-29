@@ -1,7 +1,6 @@
 """Batch RPC calls using Multicall3."""
 
 from dataclasses import dataclass
-from typing import Any, Optional
 
 from eth_abi import decode
 
@@ -33,7 +32,7 @@ class Multicall:
 
     MULTICALL3_ADDRESS = Address("0xcA11bde05977b3631167028862bE2a173976CA11")
 
-    def __init__(self, provider: AsyncProvider, multicall_address: Optional[Address] = None):
+    def __init__(self, provider: AsyncProvider, multicall_address: Address | None = None):
         """Initialize Multicall.
 
         Args:
@@ -151,7 +150,7 @@ class Multicall:
 async def batch_call(
     provider: AsyncProvider,
     calls: list[tuple[Address, bytes]],
-    multicall_address: Optional[Address] = None,
+    multicall_address: Address | None = None,
 ) -> list[bytes]:
     """Convenience function for batch calling.
 

@@ -1,9 +1,8 @@
 """Base DEX interface."""
 
 from abc import ABC, abstractmethod
-from typing import Optional
 
-from ..core.types import Address, Quote, Pool
+from ..core.types import Address, Pool, Quote
 
 
 class BaseDEX(ABC):
@@ -15,7 +14,7 @@ class BaseDEX(ABC):
         token_in: Address,
         token_out: Address,
         amount_in: int,
-        fee_tier: Optional[int] = None,
+        fee_tier: int | None = None,
     ) -> Quote:
         """Get a quote for swapping tokens.
 
@@ -36,7 +35,7 @@ class BaseDEX(ABC):
         quote: Quote,
         recipient: Address,
         slippage_bps: int = 50,
-        deadline: Optional[int] = None,
+        deadline: int | None = None,
     ) -> bytes:
         """Build swap transaction calldata.
 

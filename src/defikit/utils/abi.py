@@ -2,7 +2,7 @@
 
 import json
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from ..core.exceptions import ABIError
 
@@ -39,7 +39,7 @@ def load_abi(name: str, cache: bool = True) -> list[dict[str, Any]]:
 
     try:
         abi_path = get_abi_path(name)
-        with open(abi_path, "r") as f:
+        with open(abi_path) as f:
             abi = json.load(f)
 
         if not isinstance(abi, list):
@@ -57,7 +57,7 @@ def load_abi(name: str, cache: bool = True) -> list[dict[str, Any]]:
 
 def get_function_abi(
     abi: list[dict[str, Any]], function_name: str
-) -> Optional[dict[str, Any]]:
+) -> dict[str, Any] | None:
     """Get a specific function from an ABI.
 
     Args:
@@ -75,7 +75,7 @@ def get_function_abi(
 
 def get_event_abi(
     abi: list[dict[str, Any]], event_name: str
-) -> Optional[dict[str, Any]]:
+) -> dict[str, Any] | None:
     """Get a specific event from an ABI.
 
     Args:

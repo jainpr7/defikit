@@ -1,7 +1,8 @@
 """Pytest configuration and fixtures."""
 
+from unittest.mock import AsyncMock
+
 import pytest
-from unittest.mock import AsyncMock, Mock
 
 from defikit.core import AsyncProvider, DefiKitConfig
 

@@ -1,10 +1,9 @@
 """APY and APR calculation utilities."""
 
 from decimal import Decimal
-from typing import Union
 
 
-def apr_to_apy(apr: Union[float, Decimal], compound_frequency: int = 365) -> Decimal:
+def apr_to_apy(apr: float | Decimal, compound_frequency: int = 365) -> Decimal:
     """Convert APR to APY.
 
     Args:
@@ -22,7 +21,7 @@ def apr_to_apy(apr: Union[float, Decimal], compound_frequency: int = 365) -> Dec
     return apy
 
 
-def apy_to_apr(apy: Union[float, Decimal], compound_frequency: int = 365) -> Decimal:
+def apy_to_apr(apy: float | Decimal, compound_frequency: int = 365) -> Decimal:
     """Convert APY to APR.
 
     Args:
@@ -41,8 +40,8 @@ def apy_to_apr(apy: Union[float, Decimal], compound_frequency: int = 365) -> Dec
 
 
 def calculate_apy(
-    principal: Union[float, Decimal],
-    interest_earned: Union[float, Decimal],
+    principal: float | Decimal,
+    interest_earned: float | Decimal,
     period_days: int = 365,
 ) -> Decimal:
     """Calculate APY from principal and interest earned.
@@ -74,20 +73,20 @@ class APY:
 
     @staticmethod
     def from_apr(
-        apr: Union[float, Decimal], compound_frequency: int = 365
+        apr: float | Decimal, compound_frequency: int = 365
     ) -> Decimal:
         """Convert APR to APY."""
         return apr_to_apy(apr, compound_frequency)
 
     @staticmethod
-    def to_apr(apy: Union[float, Decimal], compound_frequency: int = 365) -> Decimal:
+    def to_apr(apy: float | Decimal, compound_frequency: int = 365) -> Decimal:
         """Convert APY to APR."""
         return apy_to_apr(apy, compound_frequency)
 
     @staticmethod
     def calculate(
-        principal: Union[float, Decimal],
-        interest_earned: Union[float, Decimal],
+        principal: float | Decimal,
+        interest_earned: float | Decimal,
         period_days: int = 365,
     ) -> Decimal:
         """Calculate APY from principal and interest."""

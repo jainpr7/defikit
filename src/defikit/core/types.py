@@ -2,14 +2,14 @@
 
 from dataclasses import dataclass
 from decimal import Decimal
-from typing import NewType, Optional, Union
+from typing import NewType
 
 from eth_typing import ChecksumAddress, HexStr
 
 # Type aliases
 Address = NewType("Address", ChecksumAddress)
 Wei = NewType("Wei", int)
-BlockIdentifier = Union[int, str, HexStr]
+BlockIdentifier = int | str | HexStr
 
 
 @dataclass
@@ -26,7 +26,7 @@ class TokenAmount:
 
     @classmethod
     def from_formatted(
-        cls, amount: Union[str, float, Decimal], decimals: int
+        cls, amount: str | float | Decimal, decimals: int
     ) -> "TokenAmount":
         """Create a TokenAmount from a formatted amount."""
         raw = int(Decimal(str(amount)) * Decimal(10**decimals))
@@ -47,7 +47,7 @@ class TokenInfo:
     name: str
     symbol: str
     decimals: int
-    total_supply: Optional[Wei] = None
+    total_supply: Wei | None = None
 
 
 @dataclass
@@ -73,7 +73,7 @@ class Quote:
     amount_out: TokenAmount
     price_impact: Decimal
     route: list[Address]
-    gas_estimate: Optional[int] = None
+    gas_estimate: int | None = None
 
     @property
     def price(self) -> Decimal:
@@ -95,7 +95,7 @@ class Pool:
     token1: Address
     reserve0: TokenAmount
     reserve1: TokenAmount
-    fee_tier: Optional[int] = None
+    fee_tier: int | None = None
 
     @property
     def price_token0(self) -> Decimal:
@@ -119,9 +119,9 @@ class Transaction:
     to: Address
     data: bytes
     value: Wei = Wei(0)
-    gas: Optional[int] = None
-    gas_price: Optional[Wei] = None
-    nonce: Optional[int] = None
+    gas: int | None = None
+    gas_price: Wei | None = None
+    nonce: int | None = None
 
 
 @dataclass

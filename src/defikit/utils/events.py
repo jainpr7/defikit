@@ -1,7 +1,7 @@
 """Event parsing and streaming utilities."""
 
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any
 
 from eth_abi import decode
 from eth_typing import HexStr
@@ -60,7 +60,7 @@ def decode_event(
         data = bytes.fromhex(log["data"][2:] if log["data"].startswith("0x") else log["data"])
         types = [inp["type"] for inp in non_indexed_inputs]
         decoded = decode(types, data)
-        for inp, value in zip(non_indexed_inputs, decoded):
+        for inp, value in zip(non_indexed_inputs, decoded, strict=True):
             non_indexed_args[inp["name"]] = value
 
     # Combine all arguments
@@ -82,7 +82,7 @@ async def get_events(
     event_abi: dict[str, Any],
     from_block: BlockIdentifier = "latest",
     to_block: BlockIdentifier = "latest",
-    address: Optional[Address] = None,
+    address: Address | None = None,
 ) -> list[Event]:
     """Get events matching the event ABI.
 
@@ -118,7 +118,7 @@ class EventStream:
         self,
         provider: AsyncProvider,
         event_abi: dict[str, Any],
-        address: Optional[Address] = None,
+        address: Address | None = None,
         poll_interval: float = 1.0,
     ):
         """Initialize event stream.
@@ -133,7 +133,7 @@ class EventStream:
         self.event_abi = event_abi
         self.address = address
         self.poll_interval = poll_interval
-        self.last_block: Optional[int] = None
+        self.last_block: int | None = None
 
     async def __aiter__(self) -> "EventStream":
         """Async iterator initialization."""

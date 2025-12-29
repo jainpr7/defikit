@@ -5,7 +5,7 @@ from typing import Any
 from eth_abi import decode, encode
 from eth_utils import function_signature_to_4byte_selector, keccak
 
-from ..core.exceptions import EncodingError, DecodingError
+from ..core.exceptions import DecodingError, EncodingError
 
 
 def encode_function_data(
@@ -76,7 +76,7 @@ def encode_packed(types: list[str], values: list[Any]) -> bytes:
     try:
         # This is a simplified version - full implementation would need more type handling
         result = b""
-        for type_str, value in zip(types, values):
+        for type_str, value in zip(types, values, strict=True):
             if type_str == "address":
                 # Convert address to bytes
                 if isinstance(value, str):
