@@ -146,7 +146,7 @@ class AsyncProvider:
         async def _send_raw_transaction(
             provider: AsyncWeb3, raw_transaction: bytes
         ) -> HexStr:
-            return await provider.eth.send_raw_transaction(raw_transaction)
+            return await provider.eth.send_raw_transaction(raw_transaction)  # type: ignore[return-value]
 
         return await self._execute_with_retry(_send_raw_transaction, raw_tx)
 
@@ -168,9 +168,9 @@ class AsyncProvider:
         ) -> TransactionReceipt:
             receipt = await provider.eth.get_transaction_receipt(hash)
             return TransactionReceipt(
-                transaction_hash=receipt["transactionHash"].hex(),
+                transaction_hash=receipt["transactionHash"].hex(),  # type: ignore[arg-type]
                 block_number=receipt["blockNumber"],
-                block_hash=receipt["blockHash"].hex(),
+                block_hash=receipt["blockHash"].hex(),  # type: ignore[arg-type]
                 gas_used=receipt["gasUsed"],
                 status=receipt["status"],
                 logs=[dict(log) for log in receipt["logs"]],
@@ -230,7 +230,7 @@ class AsyncProvider:
             if topic_list:
                 filter_params["topics"] = topic_list
 
-            logs = await provider.eth.get_logs(filter_params)
+            logs = await provider.eth.get_logs(filter_params)  # type: ignore[arg-type]
             return [dict(log) for log in logs]
 
         return await self._execute_with_retry(

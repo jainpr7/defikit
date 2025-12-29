@@ -97,14 +97,14 @@ async def get_events(
         List of decoded events
     """
     # Get event signature topic
-    event_topic = event_abi_to_log_topic(event_abi)
+    event_topic = event_abi_to_log_topic(event_abi)  # type: ignore[arg-type]
 
     # Get logs
     logs = await provider.get_logs(
         from_block=from_block,
         to_block=to_block,
         address=address,
-        topics=[event_topic.hex()],
+        topics=[event_topic.hex()],  # type: ignore[list-item]
     )
 
     # Decode events

@@ -84,9 +84,9 @@ async def get_eth_and_token_balances(
     )
 
     # Combine results
-    result = {
+    result: dict[str, TokenAmount] = {
         "ETH": TokenAmount(raw=eth_balance, decimals=18),
-        **token_balances,
+        **token_balances,  # type: ignore[arg-type, dict-item]
     }
 
     return result

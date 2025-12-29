@@ -64,7 +64,7 @@ class Contract:
             Function return value
         """
         function = self._w3_contract.functions[function_name]
-        return await function(*args, **kwargs).call(block_identifier=block)
+        return await function(*args, **kwargs).call(block_identifier=block)  # type: ignore[arg-type]
 
     def encode_function_data(
         self,
@@ -83,7 +83,8 @@ class Contract:
             Encoded function call data
         """
         function = self._w3_contract.functions[function_name]
-        return function(*args, **kwargs).build_transaction({"to": self.address})["data"]
+        tx = function(*args, **kwargs).build_transaction({"to": self.address})  # type: ignore[arg-type, misc]
+        return tx["data"]  # type: ignore[return-value, index]
 
     async def estimate_gas(
         self,
@@ -108,7 +109,7 @@ class Contract:
         if from_address:
             tx_params["from"] = from_address
 
-        return await function(*args, **kwargs).estimate_gas(tx_params)
+        return await function(*args, **kwargs).estimate_gas(tx_params)  # type: ignore[arg-type]
 
 
 def get_contract(

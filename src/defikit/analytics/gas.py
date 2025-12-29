@@ -23,7 +23,7 @@ class GasAnalytics:
         """
         return await self.provider.get_gas_price()
 
-    async def estimate_gas(self, tx_params: dict) -> int:
+    async def estimate_gas(self, tx_params: dict) -> int:  # type: ignore[type-arg]
         """Estimate gas for a transaction.
 
         Args:
@@ -32,4 +32,4 @@ class GasAnalytics:
         Returns:
             Estimated gas
         """
-        return await self.provider.estimate_gas(tx_params)
+        return await self.provider.estimate_gas(tx_params)  # type: ignore[arg-type]

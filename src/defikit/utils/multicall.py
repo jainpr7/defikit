@@ -1,8 +1,10 @@
 """Batch RPC calls using Multicall3."""
 
 from dataclasses import dataclass
+from typing import cast
 
 from eth_abi import decode
+from eth_typing import ChecksumAddress
 
 from ..core.provider import AsyncProvider
 from ..core.types import Address
@@ -30,7 +32,7 @@ class CallResult:
 class Multicall:
     """Utility for batching multiple contract calls into a single RPC request."""
 
-    MULTICALL3_ADDRESS = Address("0xcA11bde05977b3631167028862bE2a173976CA11")
+    MULTICALL3_ADDRESS = Address(cast(ChecksumAddress, "0xcA11bde05977b3631167028862bE2a173976CA11"))
 
     def __init__(self, provider: AsyncProvider, multicall_address: Address | None = None):
         """Initialize Multicall.

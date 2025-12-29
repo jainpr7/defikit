@@ -1,6 +1,10 @@
 """Main DeFiKit class."""
 
-from .core import AsyncProvider, DefiKitConfig, get_chain
+from typing import cast
+
+from eth_typing import ChecksumAddress
+
+from .core import Address, AsyncProvider, DefiKitConfig, get_chain
 from .tokens import get_balance, get_balances, get_token_info
 
 
@@ -63,7 +67,8 @@ class DeFiKit:
         Returns:
             TokenInfo object
         """
-        return await get_token_info(token_address, self.provider)
+        addr = Address(cast(ChecksumAddress, token_address))
+        return await get_token_info(addr, self.provider)
 
     async def get_balance(self, token_address: str, account: str):
         """Get token balance.
@@ -75,7 +80,9 @@ class DeFiKit:
         Returns:
             Token balance
         """
-        return await get_balance(token_address, account, self.provider)
+        token_addr = Address(cast(ChecksumAddress, token_address))
+        account_addr = Address(cast(ChecksumAddress, account))
+        return await get_balance(token_addr, account_addr, self.provider)
 
     async def get_balances(self, account: str, token_addresses: list[str]):
         """Get multiple token balances.
@@ -87,4 +94,6 @@ class DeFiKit:
         Returns:
             Dictionary of balances
         """
-        return await get_balances(account, token_addresses, self.provider)
+        account_addr = Address(cast(ChecksumAddress, account))
+        token_addrs = [Address(cast(ChecksumAddress, addr)) for addr in token_addresses]
+        return await get_balances(account_addr, token_addrs, self.provider)
